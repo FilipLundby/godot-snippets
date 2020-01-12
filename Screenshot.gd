@@ -15,7 +15,8 @@ var _os_separator = "/"
 func _ready():
 	# Create directory
 	_os_separator = "\\" if OS.get_name() == "Windows" else "/"
-	Directory.new().make_dir("%s%s%s" % [_root_directory, _os_separator, _screenshot_directory])
+	var screenshot_directory = PoolStringArray([_root_directory, _screenshot_directory]).join(_os_separator)
+	Directory.new().make_dir(screenshot_directory)
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -37,8 +38,8 @@ func _capture_thread(_arg):
 	image.flip_y()
 	image.save_png(godot_path)
 	# Print path to image
-	var os_path = [OS.get_user_data_dir(), _screenshot_directory, image_filename]
-	print ("Screenshot saved to: %s" % PoolStringArray(os_path).join(_os_separator))
+	var os_path = PoolStringArray([OS.get_user_data_dir(), _screenshot_directory, image_filename]).join(_os_separator)
+	print ("Screenshot saved to: %s" % os_path)
 
 func _exit_tree():
 	for task in _capture_tasks:
