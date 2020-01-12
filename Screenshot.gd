@@ -10,13 +10,12 @@ var _root_directory = "user://"
 var _screenshot_directory = "screenshots"
 var _capture_tasks = []
 var _random = RandomNumberGenerator.new()
+var _os_separator = "/"
 
 func _ready():
 	# Create directory
-	if OS.get_name() == "Windows":
-		Directory.new().make_dir("%s\\%s" % [_root_directory, _screenshot_directory])
-	else:
-		Directory.new().make_dir("%s/%s" % [_root_directory, _screenshot_directory])
+	_os_separator = "\\" if OS.get_name() == "Windows" else "/"
+	Directory.new().make_dir("%s%s%s" % [_root_directory, _os_separator, _screenshot_directory])
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -39,10 +38,7 @@ func _capture_thread(_arg):
 	image.save_png(godot_path)
 	# Print path to image
 	var os_path = [OS.get_user_data_dir(), _screenshot_directory, image_filename]
-	if OS.get_name() == "Windows":
-		print ("Screenshot saved to: %s\\%s\\%s" % os_path)
-	else:
-		print ("Screenshot saved to: %s/%s/%s" % os_path)
+	print ("Screenshot saved to: %s" % PoolStringArray(os_path).join(_os_separator))
 
 func _exit_tree():
 	for task in _capture_tasks:
