@@ -13,7 +13,10 @@ var _random = RandomNumberGenerator.new()
 
 func _ready():
 	# Create directory
-	Directory.new().make_dir(_screenshot_directory)
+	if OS.get_name() == "Windows":
+		Directory.new().make_dir("%s\\%s" % [_root_directory, _screenshot_directory])
+	else:
+		Directory.new().make_dir("%s/%s" % [_root_directory, _screenshot_directory])
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
