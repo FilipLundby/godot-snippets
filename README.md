@@ -7,7 +7,7 @@ If you find any of these scripts useful, consider throwing some credit my way on
 
 ## Bugs
 
-Found and issue? [Please let me know](https://twitter.com/messages/compose?recipient_id=259365053).
+Found an issue? [Please let me know](https://twitter.com/messages/compose?recipient_id=259365053).
 
 
 ## MIT License
